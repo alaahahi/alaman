@@ -385,27 +385,29 @@ function getDownloadUrl(name) {
                                         {{ $t('vin') }}
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('car_number') }} copart
+                                        {{ $t('car_number') }}
                                       </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                          نقل خارجي     
+                                        </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                           سعر الصرف	
+                                        </th>
+                                        <th scope="col" class="px-1 py-3 text-base">
+                                          نقل داخلي
+                                        </th>
+                                        <th scope="col" class="px-1 py-3 text-base">
+                                          تخليص
+                                        </th>
                                      
-                        
                                       <th scope="col" class="px-1 py-3 text-base">
-                                          سعر السيارة امريكا         
-                                        </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                          شحن امريكا	
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          كرين
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          مصاريف دبي
-                                        </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('expenses') }}
+                                       كمرك
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
-                                       عمولة
+                                       لوحات
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       ضريبة
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('total') }}
@@ -445,6 +447,7 @@ function getDownloadUrl(name) {
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.checkout_s}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.expenses_s}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission}}</td>
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s).toFixed(0) }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.paid}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ ((car.total_s).toFixed(0)) - car.paid}}</td>

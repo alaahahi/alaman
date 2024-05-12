@@ -37,6 +37,7 @@ class Car extends Model
         'car_color',
         'year',
         'commission',
+        'tax',
         'expenses',
         'dinar_s',
         'dolar_price_s',

@@ -145,11 +145,6 @@ function onSelect (items, lastSelectItem) {
             <div
               class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 lg:gap-2"
             >  
-
-  
-
-
- 
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="pin">
                   {{ $t("vin") }}</label
@@ -203,7 +198,6 @@ function onSelect (items, lastSelectItem) {
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="car_number">
                   {{ $t("car_number") }}
-                  COPART
                   </label
                 >
                 <input
@@ -215,7 +209,7 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="shipping_dolar">
-                  سعر السيارة امريكا	
+                  نقل خارجي
                   </label
                 >
                 <input
@@ -227,7 +221,7 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="shipping_dolar">
-                  شحن امريكا	
+                   سعر الصرف	
                   </label
                 >
                 <input
@@ -240,7 +234,7 @@ function onSelect (items, lastSelectItem) {
              
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="coc_dolar">
-                  كرين</label
+                  نقل داخلي</label
                 >
                 <input
                   id="coc_dolar"
@@ -251,7 +245,7 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                  مصاريف دبي</label
+                   تخليص</label
                 >
                 <input
                   id="checkout"
@@ -262,7 +256,7 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                  مصاريف عامة</label
+                   كمرك</label
                 >
                 <input
                   id="checkout"
@@ -271,7 +265,28 @@ function onSelect (items, lastSelectItem) {
                   v-model="formData.expenses"
                 />
               </div>
-              
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   لوحات</label
+                >
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.commission"
+                />
+              </div>
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   ضريبة</label
+                >
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.tax"
+                />
+              </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="date">
                   {{ $t("date") }}</label

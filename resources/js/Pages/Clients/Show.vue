@@ -823,74 +823,70 @@ function getDownloadUrl(name) {
                 <thead
                   class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center"
                 >
-                  <tr class="rounded-l-lg mb-2 sm:mb-0">
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("no") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("car_type") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("year") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("color") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("vin") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("car_number") }} copart
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base print:hidden">
-                      {{ $t("note") }}
-                    </th>
-                    <th scope="col" class="px-1 py-3 text-base">
-                      سعر السيارة امريكا         
-                    </th>
-                    <th scope="col" class="px-1 py-3 text-base">
-                    شحن امريكا	
-                    </th>
-                    <th scope="col" class="px-1 py-3 text-base">
-                      كرين
-                    </th>
-                    <th scope="col" class="px-1 py-3 text-base">
-                      مصاريف دبي
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("expenses") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      عمولة
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("total") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("paid") }}
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                    المتبقي
-                    </th>
-                    <th scope="col" class="px-1 py-2 text-base">
-                      {{ $t("date") }}
-                    </th>
-
-                    <th
-                      scope="col"
-                      class="px-1 py-2 text-base print:hidden"
-                      style="width:250px"
-                    >
-                      {{ $t("execute") }}
-                    </th>
-                    <th
-                      scope="col"
-                      class="px-1 py-2 text-base print:hidden"
-                      style="width:100px"
-                    >
-                      تخزين
-                    </th>
-                  </tr>
+                <tr>
+                                      <th scope="col" class="px-1 py-3 text-base	">
+                                       No
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base	">
+                                        {{ $t('car_owner') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('car_type') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('year') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('color') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('vin') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('car_number') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                          نقل خارجي     
+                                        </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                           سعر الصرف	
+                                        </th>
+                                        <th scope="col" class="px-1 py-3 text-base">
+                                          نقل داخلي
+                                        </th>
+                                        <th scope="col" class="px-1 py-3 text-base">
+                                          تخليص
+                                        </th>
+                                     
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       كمرك
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       لوحات
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       ضريبة
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('total') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('paid') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        المتبقي
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('date') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('note') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base" style="width: 180px;">
+                                        {{ $t('execute') }}
+                                      </th>
+                                      <th class="px-1 py-3 text-base">تخزين</th>
+                                  </tr>
                 </thead>
                 <tbody>
                   <tr
@@ -967,11 +963,8 @@ function getDownloadUrl(name) {
                     >
                       {{ car.expenses_s }}
                     </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.commission }}
-                    </td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax}}</td>
                     <td
                       className="border dark:border-gray-800 text-center px-2 py-1"
                     >
@@ -988,6 +981,12 @@ function getDownloadUrl(name) {
                       className="border dark:border-gray-800 text-center px-2 py-1"
                     >
                       {{ car.date }}
+                    </td>
+
+                    <td
+                      className="border dark:border-gray-800 text-center px-2 py-1"
+                    >
+                      {{ car.note }}
                     </td>
                     <td
                       className="border dark:border-gray-800 text-start px-2 py-1 print:hidden"

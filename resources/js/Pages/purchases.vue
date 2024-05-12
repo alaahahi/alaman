@@ -784,62 +784,69 @@ const currentWork = ref(true);
                           <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <table class="w-full text-sm text-right text-gray-500 dark:text-gray-200 dark:text-gray-400 text-center">
                                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center" >
-                                    <tr>
-                                        <th scope="col" class="px-1 py-3 text-base	">
-                                          No
+                                  <tr>
+                                      <th scope="col" class="px-1 py-3 text-base	">
+                                       No
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base	">
+                                        {{ $t('car_owner') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('car_type') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('year') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('color') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('vin') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('car_number') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                          نقل خارجي     
                                         </th>
-                                        <th scope="col" class="px-1 py-3 text-base	">
-                                          {{ $t('car_owner') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('car_type') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('year') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('color') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('vin') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('car_number') }} copart
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          سعر السيارة امريكا         
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          شحن امريكا	
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          كرين
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                           سعر الصرف	
                                         </th>
                                         <th scope="col" class="px-1 py-3 text-base">
-                                          مصاريف دبي
+                                          نقل داخلي
                                         </th>
                                         <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('expenses') }}
+                                          تخليص
                                         </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('total') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('paid') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('profit') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('date') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          {{ $t('note') }}
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base" style="width: 200px;">
-                                          {{ $t('execute') }}
-                                        </th>
-                                    </tr>
+                                    
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       كمرك
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       لوحات
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                       ضريبة
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('total') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('paid') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        المتبقي
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('date') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                        {{ $t('note') }}
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base" style="width: 180px;">
+                                        {{ $t('execute') }}
+                                      </th>
+                                  </tr>
                                 </thead>
                                 <tbody>
 
@@ -858,6 +865,8 @@ const currentWork = ref(true);
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.coc_dolar  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.checkout}}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.expenses  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.commission  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.tax  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total).toFixed(0)  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.paid}}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s-car.total).toFixed(0) }}</td>

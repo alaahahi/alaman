@@ -824,212 +824,115 @@ function getDownloadUrl(name) {
                   class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center"
                 >
                 <tr>
-                                      <th scope="col" class="px-1 py-3 text-base	">
-                                       No
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base	">
-                                        {{ $t('car_owner') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('car_type') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('year') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('color') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('vin') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('car_number') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                          نقل خارجي     
-                                        </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                           سعر الصرف	
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          نقل داخلي
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          تخليص
-                                        </th>
-                                     
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                       كمرك
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                       لوحات
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                       ضريبة
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('total') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('paid') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        المتبقي
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('date') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                        {{ $t('note') }}
-                                      </th>
-                                      <th scope="col" class="px-1 py-3 text-base" style="width: 180px;">
-                                        {{ $t('execute') }}
-                                      </th>
-                                      <th class="px-1 py-3 text-base">تخزين</th>
-                                  </tr>
+                    <th scope="col" class="px-1 py-3 text-base	">
+                      No
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base	">
+                      {{ $t('car_owner') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('car_type') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('year') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('color') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('vin') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('car_number') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                        نقل خارجي     
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                        نقل داخلي
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                          سعر الصرف	
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                        تخليص
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      كمرك
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      لوحات
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      ضريبة
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      مصاريف
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('total') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('paid') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      فائدة الشركة
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('date') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base">
+                      {{ $t('note') }}
+                    </th>
+                    <th scope="col" class="px-1 py-3 text-base" style="width: 180px;">
+                      {{ $t('execute') }}
+                    </th>
+                    <th class="px-1 py-3 text-base">تخزين</th>
+                </tr>
                 </thead>
                 <tbody>
-                  <tr
-                    v-for="(car, i) in laravelData.data"
-                    v-show="(car.results == 2 && showComplatedCars)|| car.results!=2"
-                    :key="car.id"
+                  <tr v-for="(car, index) in laravelData.data"  v-show="(car.results == 2 && showComplatedCars)|| car.results!=2"  :key="car.id"
                     :class="{
                       'bg-red-100 dark:bg-red-900': car.results == 0,
                       'bg-red-100 dark:bg-red-900': car.results == 1,
                       'bg-green-100 dark:bg-green-900': car.results == 2,
                       'bg-yellow-100 dark:bg-yellow-900':(car.vin.startsWith(q)|| car.car_number.toString().startsWith(q)),
-                    }
-                    "
-                    class="border-b dark:bg-gray-900 dark:border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-600"
-                  >
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ i + 1 }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.car_type }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.year }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.car_color }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.vin }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.car_number }}
-                    </td>
-                    
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1 print:hidden"
-                    >
-                      {{ car.note }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.shipping_dolar_s }}
-                    </td>        
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.dinar_s }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.coc_dolar_s }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.checkout_s }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.expenses_s }}
-                    </td>
-                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission}}</td>
-                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax}}</td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.total_s.toFixed(0) }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.paid }}
-                    </td>
-                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s.toFixed(0))-car.paid}}</td>
+                    }" 
+                    class="border-b dark:bg-gray-900 dark:border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-600">
+                  <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ index+1}}</td>
+                    <td className="border dark:border-gray-800 text-center  dark:text-gray-200 text-black px-1 py-2 " style="font-weight: bold;font-size: 16px;">{{ car.client?.name }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_type}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.year}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_color }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.vin }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_number }}</td> 
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.shipping_dolar_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.coc_dolar_s  }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dolar_price_s  }}</td>
 
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.date }}
-                    </td>
-
-                    <td
-                      className="border dark:border-gray-800 text-center px-2 py-1"
-                    >
-                      {{ car.note }}
-                    </td>
-                    <td
-                      className="border dark:border-gray-800 text-start px-2 py-1 print:hidden"
-                    >
-    
-                      <button
-                        tabIndex="1"
-                        
-                        class="px-1 py-1  text-white mx-1 bg-slate-500 rounded"
-                        @click="openModalEditCars(car)"
-                      >
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.checkout_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dinar_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.expenses_s}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s).toFixed(0) }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.paid}}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s-car.total).toFixed(0) }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.date  }}</td>
+                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.note }}</td>
+                    <td className="border dark:border-gray-800 text-start px-2 py-1 print:hidden">
+                      <button tabIndex="1" class="px-1 py-1  text-white mx-1 bg-slate-500 rounded" @click="openModalEditCars(car)">
                         <edit />
                       </button>
-                      <button
-                        tabIndex="1"
-                        
-                        class="px-1 py-1  text-white mx-1 bg-orange-500 rounded"
-                        @click="openModalDelCar(car)"
-                      >
+                      <button tabIndex="1" class="px-1 py-1  text-white mx-1 bg-orange-500 rounded" @click="openModalDelCar(car)">
                         <trash />
                       </button>
-                      <button
-                        v-if="car.total_s != (car.paid+ car.discount)"
-                        tabIndex="1"
-                        class="px-1 py-1  text-white mx-1 bg-green-500 rounded"
-                        @click="openAddCarPayment(car)"
-                      >
+                      <button v-if="car.total_s != (car.paid+ car.discount)" tabIndex="1" class="px-1 py-1  text-white mx-1 bg-green-500 rounded" @click="openAddCarPayment(car)">
                         <pay />
                       </button>
-                    
-                 
- 
-                      <button
-                        tabIndex="1"
-                        class="px-1 py-1  text-white mx-1 bg-blue-500 rounded"
-                        v-if="car.is_exit"
-                        @click="openModalShowExitCar(car)"
-
-                      >
+                      <button tabIndex="1" class="px-1 py-1  text-white mx-1 bg-blue-500 rounded"  v-if="car.is_exit"  @click="openModalShowExitCar(car)">
                         <show />
                       </button>
-
-
                     </td>
                     <td  className="border dark:border-gray-800 text-start px-2 py-1 print:hidden">
                       <a

@@ -280,8 +280,12 @@ class DashboardController extends Controller
         }else{
             $dolar_price=$dolar_price;
         }
-        $dolar_custom=(int)($dinar/($dolar_price)) ??0;
-        $total_amount = $checkout+$shipping_dolar+$expenses+ $coc_dolar +$dolar_custom+$commission+$tax;
+        $dinar_custom=(int)($dinar/($dolar_price)) ??0;
+        $dolar_tax=(int)($tax/($dolar_price)) ??0;
+        $dolar_commission=(int)($commission/($dolar_price)) ??0;
+        $dolar_checkout=(int)($checkout/($dolar_price)) ??0;
+
+        $total_amount = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax;
         if( $client_id==0){
             $client = new User;
             $client->name = $request->client_name;
@@ -301,7 +305,7 @@ class DashboardController extends Controller
             'car_type'=> $request->car_type,
             'vin'=> $request->vin,
             'car_number'=> $request->car_number,
-            'dinar'=> $request->dinar,
+            'dinar'=> $dinar,
             'dolar_price'=> $request->dolar_price,
             'shipping_dolar'=> $request->shipping_dolar,
             'coc_dolar'=> $request->coc_dolar,
@@ -349,12 +353,17 @@ class DashboardController extends Controller
            
         }
         $images=[];
-        $checkout=$request->checkout ;
-        $shipping_dolar=$request->shipping_dolar ;
-        $coc_dolar=$request->coc_dolar;
-        $dinar=$request->dinar;
-        $expenses=($request->expenses??0);
-        $dolar_price=$request->dolar_price ;
+
+        $checkout=$request->checkout ?? 0;
+        $shipping_dolar=$request->shipping_dolar ?? 0;
+        $coc_dolar=$request->coc_dolar ?? 0;
+        $dinar=$request->dinar ?? 0;
+        $dolar_price=$request->dolar_price ?? 1;
+        $expenses=$request->expenses ?? 0;
+        $paid=$request->paid ?? 0;
+        $commission=$request->commission ??0;
+        $tax=$request->tax ??0
+        ;
         if($dolar_price==0){
             $dolar_price=1;
         }elseif($dolar_price > 9999){
@@ -362,8 +371,12 @@ class DashboardController extends Controller
         }else{
             $dolar_price=$dolar_price;
         }
+        $dinar_custom=(int)($dinar/($dolar_price)) ??0;
+        $dolar_tax=(int)($tax/($dolar_price)) ??0;
+        $dolar_commission=(int)($commission/($dolar_price)) ??0;
+        $dolar_checkout=(int)($checkout/($dolar_price)) ??0;
 
-        $total = (int)(($checkout+$shipping_dolar+ $coc_dolar +(int)($dinar / ($dolar_price))+$expenses) ??0);
+        $total = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax;
         if($car->client_id == $request->client_id)
         {
 
@@ -435,8 +448,8 @@ class DashboardController extends Controller
         $shipping_dolar_s=$request->shipping_dolar_s ;
         $coc_dolar_s=$request->coc_dolar_s ;
         $dinar_s=$request->dinar_s ;
-        $commission=$request->commission ;
-        $tax=$request->tax ;
+        $commission_s=$request->commission_s ;
+        $tax_s=$request->tax_s ;
         
         $expenses_s=($request->expenses_s??0);
         $dolar_price_s=$request->dolar_price_s ;
@@ -447,8 +460,15 @@ class DashboardController extends Controller
         }else{
             $dolar_price_s=$dolar_price_s;
         }
-        $total_s = (($checkout_s+$shipping_dolar_s+ $coc_dolar_s+$commission+$tax +(int)($dinar_s / ($dolar_price_s))+$expenses_s) ??0);
+        $dinar_custom=(int)($dinar_s/($dolar_price_s)) ??0;
+        $dolar_tax=(int)($tax_s/($dolar_price_s)) ??0;
+        $dolar_commission=(int)($commission_s/($dolar_price_s)) ??0;
+        $dolar_checkout=(int)($checkout_s/($dolar_price_s)) ??0;
+
+        $total_s = $dolar_checkout+$shipping_dolar_s+ $coc_dolar_s+$dolar_commission+$dolar_tax +$dinar_custom+$expenses_s;
+
         $profit=$total_s-$car->total;
+
         $descClient = trans('text.editExpenses').' '.$total_s-$car->total_s.' '.trans('text.for_car').$car->car_type.' '.$car->vin;
         $this->accountingController->increaseWallet($total_s-$car->total_s, $descClient,$car->client_id,$car->id,'App\Models\User');
             // Extract the relevant fields from the $request object
@@ -456,6 +476,7 @@ class DashboardController extends Controller
             // If 'purchase_price' and 'paid_amount' are calculated separately, add them to $dataToUpdate
             $dataToUpdate['total_s']=$total_s;
             $dataToUpdate['profit']=$profit;
+            $dataToUpdate['dolar_price_s']=$request->dolar_price_s;
 
             if($car->paid){
                 if($total_s >($car->paid+$car->discount)){

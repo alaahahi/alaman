@@ -47,6 +47,12 @@ function openModalEditCars(form={}){
   if(formData.value.expenses_s==0){
     formData.value.expenses_s=formData.value.expenses 
   }
+  if(formData.value.tax_s==0){
+    formData.value.tax_s=formData.value.tax
+  }
+  if(formData.value.commission_s==0){
+    formData.value.commission_s=formData.value.commission 
+  }
   if(formData.value.dinar_s==0){
     formData.value.dinar_s=formData.value.dinar 
   }
@@ -389,17 +395,16 @@ function getDownloadUrl(name) {
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                           نقل خارجي     
-                                        </th>
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
+                                          نقل داخلي
+                                      </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                            سعر الصرف	
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
-                                          نقل داخلي
-                                        </th>
-                                        <th scope="col" class="px-1 py-3 text-base">
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
                                           تخليص
-                                        </th>
-                                     
+                                      </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                        كمرك
                                       </th>
@@ -410,13 +415,16 @@ function getDownloadUrl(name) {
                                        ضريبة
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
+                                       مصاريف
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('total') }}
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('paid') }}
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
-                                        المتبقي
+                                        فائدة الشركة
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('date') }}
@@ -442,16 +450,16 @@ function getDownloadUrl(name) {
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.vin }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_number }}</td> 
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.shipping_dolar_s}}</td>
-                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dinar_s}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.coc_dolar_s  }}</td>
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dolar_price_s  }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.checkout_s}}</td>
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dinar_s}}</td>
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission_s}}</td>
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax_s}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.expenses_s}}</td>
-                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission}}</td>
-                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax}}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s).toFixed(0) }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.paid}}</td>
-                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ ((car.total_s).toFixed(0)) - car.paid}}</td>
-
+                                    <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s-car.total).toFixed(0) }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.date  }}</td>
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.note }}</td>
 

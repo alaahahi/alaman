@@ -33,7 +33,7 @@
        
     <h5 class="pt-3">  كشف حساب</h5>
     </div>
-    <div class="col-4 text-center py-3"> 
+    <div class="col-4 text-center pb-3"> 
         @include('Components.logo')
 
     </div>
@@ -82,17 +82,19 @@
             <th scope="col">السيارة</th>
             <th scope="col">تاريخ</th>
             <th scope="col">رقم شاسى</th>
-            <th scope="col"> رقم copart</th>
+            <th scope="col">رقم السيارة</th>
             <th scope="col">لون</th>
             <th scope="col">موديل</th>
-            <th scope="col"> سعر السيارة امريكا</th>
-            <th scope="col"> شحن امريكا	</th>
-            <th scope="col">كرين</th>
-            <th scope="col"> مصاريف دبي</th>
+
+            <th scope="col">نقل خارجي</th>
+            <th scope="col"> نقل داخلي</th>
+
+            <th scope="col">تخليص</th>
+            <th scope="col">كمرك</th>
+            <th scope="col"> لوحات</th>
+            <th scope="col">ضريبة</th>
+            
             <th scope="col">مصاريف</th>
-            <th scope="col">
-              عمولة
-            </th>
             <th scope="col">مجموع</th>
             <th scope="col">ملاحطة</th>
           </tr>
@@ -107,12 +109,16 @@
                 <td>{{$data->car_number}}</td>
                 <td>{{$data->car_color}}</td>
                 <td>{{$data->year}}</td>
+
                 <td>{{$data->shipping_dolar_s}}</td>
-                <td>{{$data->dinar_s}}</td>
                 <td>{{$data->coc_dolar_s}}</td>
-                <td>{{$data->shipping_dolar_s}}</td>
+
+                <td>{{$data->checkout_s}}</td>
+                <td>{{$data->dinar_s}}</td>
+                <td>{{$data->commission_s}}</td>
+                <td>{{$data->tax_s}}</td>
+
                 <td>{{$data->expenses_s}}</td>
-                <td>{{$data->commission}}</td>
                 <td>{{$data->total_s}}</td>
                 <td>{{$data->note}}</td>
               </tr>

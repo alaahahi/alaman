@@ -38,6 +38,8 @@ class Car extends Model
         'year',
         'commission',
         'tax',
+        'commission_s',
+        'tax_s',
         'expenses',
         'dinar_s',
         'dolar_price_s',

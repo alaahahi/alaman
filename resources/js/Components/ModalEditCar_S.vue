@@ -107,7 +107,22 @@ function removeMedia(removedImage){
             <div
               class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 lg:gap-2"
             >
-              <div className="mb-4 mx-1">
+            <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="pin">
+                  {{ $t("vin") }}</label
+                >
+                <input
+                  id="vin"
+                  type="text"
+                  @change="check_vin(formData.vin)"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.vin"
+                />
+                <div class="text-red-700" v-if="showErrorVin">
+                  رقم الشاصي مستخدم
+                </div>
+            </div>
+            <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="pin">
                   {{ $t("car_type") }}</label
                 >
@@ -141,24 +156,11 @@ function removeMedia(removedImage){
                 />
               </div>
 
-              <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="pin">
-                  {{ $t("vin") }}</label
-                >
-                <input
-                  id="vin"
-                  type="text"
-                  @change="check_vin(formData.vin)"
-                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.vin"
-                />
-                <div class="text-red-700" v-if="showErrorVin">
-                  رقم الشاصي مستخدم
-                </div>
-              </div>
+       
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="car_number">
-                  {{ $t("car_number") }} copart</label
+                  {{ $t("car_number") }}
+                  </label
                 >
                 <input
                   id="car_number"
@@ -167,13 +169,11 @@ function removeMedia(removedImage){
                   v-model="formData.car_number"
                 />
               </div>
-  
-      
-    
               <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="shipping_dolar_s">
-                  سعر السيارة امريكا	</label
-                >
+                <label class="dark:text-gray-200" for="shipping_dolar">
+                  نقل خارجي
+                <span>$</span>
+                </label>
                 <input
                   id="shipping_dolar"
                   type="number"
@@ -181,74 +181,95 @@ function removeMedia(removedImage){
                   v-model="formData.shipping_dolar_s"
                 />
               </div>
+           
+             
               <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="shipping_dolar">
-                  شحن امريكا	
-                  </label
-                >
+                <label class="dark:text-gray-200" for="coc_dolar">
+                نقل داخلي 
+                <span>$</span>
+                </label>
+
                 <input
-                  id="dinar"
-                  type="number"
-                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.dinar_s"
-                />
-              </div>
-              <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="coc_dolar_s">
-                 كرين</label
-                >
-                <input
-                  id="coc_dolar_s"
+                  id="coc_dolar"
                   type="number"
                   class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
                   v-model="formData.coc_dolar_s"
                 />
               </div>
+
               <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="checkout_s">
-                  مصاريف دبي</label
-                >
+                <label class="dark:text-gray-200" for="shipping_dolar">
+                   سعر الصرف	
+                  </label>
                 <input
-                  id="checkout_s"
+                  id="dolar_price"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.dolar_price_s"
+                />
+              </div>
+              
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   تخليص
+                   <span>IQD</span>
+                  </label>
+                <input
+                  id="checkout"
                   type="number"
                   class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
                   v-model="formData.checkout_s"
                 />
               </div>
               <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="expenses">
-                  {{ $t("expenses") }} </label
+                <label class="dark:text-gray-200" for="checkout">
+                   كمرك
+                   <span>IQD</span>
+                  </label>
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.dinar_s"
+                />
+              </div>
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   لوحات
+                  <span>IQD</span>
+                </label>
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.commission_s"
+                />
+              </div>
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   ضريبة
+                  <span>IQD</span>
+                </label>
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.tax_s"
+                />
+              </div>
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   مصاريف
+                   <span>$</span>
+                   </label
                 >
                 <input
-                  id="expenses"
+                  id="checkout"
                   type="number"
                   class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
                   v-model="formData.expenses_s"
                 />
               </div>
-              <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="shipping_dolar">
-                  عمولة
-                </label
-                >
-                <input
-                  id="shipping_dolar"
-                  type="number"
-                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.commission"
-                />
-              </div>
-              <!-- <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="paid">
-                  {{ $t("paid") }}</label
-                >
-                <input
-                  id="paid"
-                  type="number"
-                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.paid"
-                />
-              </div> -->
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="date">
                   {{ $t("date") }}</label

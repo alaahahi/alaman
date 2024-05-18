@@ -210,8 +210,8 @@ function onSelect (items, lastSelectItem) {
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="shipping_dolar">
                   نقل خارجي
-                  </label
-                >
+                <span>$</span>
+                </label>
                 <input
                   id="shipping_dolar"
                   type="number"
@@ -219,23 +219,14 @@ function onSelect (items, lastSelectItem) {
                   v-model="formData.shipping_dolar"
                 />
               </div>
-              <div className="mb-4 mx-1">
-                <label class="dark:text-gray-200" for="shipping_dolar">
-                   سعر الصرف	
-                  </label
-                >
-                <input
-                  id="shipping_dolar"
-                  type="number"
-                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.dinar"
-                />
-              </div>
+           
              
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="coc_dolar">
-                  نقل داخلي</label
-                >
+                نقل داخلي 
+                <span>$</span>
+                </label>
+
                 <input
                   id="coc_dolar"
                   type="number"
@@ -243,10 +234,24 @@ function onSelect (items, lastSelectItem) {
                   v-model="formData.coc_dolar"
                 />
               </div>
+
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="shipping_dolar">
+                   سعر الصرف	
+                  </label>
+                <input
+                  id="dolar_price"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.dolar_price"
+                />
+              </div>
+              
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                   تخليص</label
-                >
+                   تخليص
+                   <span>IQD</span>
+                  </label>
                 <input
                   id="checkout"
                   type="number"
@@ -256,19 +261,21 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                   كمرك</label
-                >
+                   كمرك
+                   <span>IQD</span>
+                  </label>
                 <input
                   id="checkout"
                   type="number"
                   class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
-                  v-model="formData.expenses"
+                  v-model="formData.dinar"
                 />
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                   لوحات</label
-                >
+                   لوحات
+                  <span>IQD</span>
+                </label>
                 <input
                   id="checkout"
                   type="number"
@@ -278,13 +285,27 @@ function onSelect (items, lastSelectItem) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                   ضريبة</label
-                >
+                   ضريبة
+                  <span>IQD</span>
+                </label>
                 <input
                   id="checkout"
                   type="number"
                   class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
                   v-model="formData.tax"
+                />
+              </div>
+              <div className="mb-4 mx-1">
+                <label class="dark:text-gray-200" for="checkout">
+                   مصاريف
+                   <span>$</span>
+                   </label
+                >
+                <input
+                  id="checkout"
+                  type="number"
+                  class="mt-1 block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm dark:bg-gray-700 dark:text-gray-200 dark:border-gray-900"
+                  v-model="formData.expenses"
                 />
               </div>
               <div className="mb-4 mx-1">

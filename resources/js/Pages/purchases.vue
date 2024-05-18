@@ -809,12 +809,15 @@ const currentWork = ref(true);
                                       <th scope="col" class="px-1 py-3 text-base">
                                           نقل خارجي     
                                         </th>
-                                      <th scope="col" class="px-1 py-3 text-base">
-                                           سعر الصرف	
-                                        </th>
+                                     
                                         <th scope="col" class="px-1 py-3 text-base">
                                           نقل داخلي
                                         </th>
+
+                                        <th scope="col" class="px-1 py-3 text-base">
+                                           سعر الصرف	
+                                        </th>
+                                        
                                         <th scope="col" class="px-1 py-3 text-base">
                                           تخليص
                                         </th>
@@ -829,13 +832,16 @@ const currentWork = ref(true);
                                        ضريبة
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
+                                        مصاريف                               
+                                      </th>
+                                      <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('total') }}
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('paid') }}
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
-                                        المتبقي
+                                        فائدة الشركة
                                       </th>
                                       <th scope="col" class="px-1 py-3 text-base">
                                         {{ $t('date') }}
@@ -849,11 +855,8 @@ const currentWork = ref(true);
                                   </tr>
                                 </thead>
                                 <tbody>
-
-
                                   <tr v-for="(car,index) in car" :key="car.id" :class="car.results == 0 ?'':car.results == 1 ?'bg-red-100 dark:bg-red-900':'bg-green-100 dark:bg-green-900'"  class="bg-white border-b dark:bg-gray-900 dark:border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ index+1}}</td>
-
                                       <td className="border dark:border-gray-900 text-center dark:text-gray-200 text-black px-1 py-2 " style="font-weight: bold;font-size: 16px;">{{ car.client?.name }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_type}}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.year}}</td>
@@ -861,46 +864,28 @@ const currentWork = ref(true);
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.vin }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.car_number }}</td> 
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.shipping_dolar}}</td>
-                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dinar}}</td>
-                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.coc_dolar  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.coc_dolar}}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dolar_price }}</td> 
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.checkout}}</td>
-                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.expenses  }}</td>
-                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.commission  }}</td>
-                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{  car.tax  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.dinar  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.commission  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.tax  }}</td>
+                                      <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.expenses  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total).toFixed(0)  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.paid}}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ (car.total_s-car.total).toFixed(0) }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.date  }}</td>
                                       <td className="border dark:border-gray-800 text-center px-1 py-2 ">{{ car.note }}</td>
-
                                       <td className="border dark:border-gray-800 text-start px-1 py-2">
-                                        <button
-                                        tabIndex="1"
-                                        
-                                        class="px-1 py-1  text-white mx-1 bg-slate-500 rounded"
-                                        @click="openModalEditCars(car)"
-                                      >
+                                      <button tabIndex="1" class="px-1 py-1  text-white mx-1 bg-slate-500 rounded"  @click="openModalEditCars(car)">
                                       <edit />
-                                    
-
                                       </button>
- 
-                                      <button
-                                        tabIndex="1"
-                                        
-                                        class="px-1 py-1  text-white mx-1 bg-orange-500 rounded"
-                                        @click="openModalDelCar(car)"
-                                      >
+                                      <button tabIndex="1" class="px-1 py-1  text-white mx-1 bg-orange-500 rounded" @click="openModalDelCar(car)">
                                       <trash />
                                       </button>
-                                      <Link
-                                        style="display:inline-flex;"
-                                        className="px-1 py-1  text-white mx-1 bg-blue-500 rounded d-inline-block"
-                                        :href="route('showClients',car?.client?.id||0)">
+                                      <Link  style="display:inline-flex;"  className="px-1 py-1  text-white mx-1 bg-blue-500 rounded d-inline-block"  :href="route('showClients',car?.client?.id||0)">
                                       <show />
                                       </Link>
-
-                                    
                                       <!-- <button
                                         v-if="car.total_s != car.paid"
                                         tabIndex="1"

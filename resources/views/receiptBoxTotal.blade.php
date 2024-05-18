@@ -33,7 +33,7 @@
        
     <h5 class="pt-3">  جميع الدفعات </h5>
     </div>
-    <div class="col-4 text-center py-3"> 
+    <div class="col-4 text-center pb-3"> 
         @include('Components.logo')
 
     </div>

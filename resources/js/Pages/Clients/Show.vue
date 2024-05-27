@@ -407,7 +407,7 @@ function getDownloadUrl(name) {
       <h2
         class="font-semibold text-xl dark:text-gray-400 text-gray-800 leading-tight"
       >
-        شركة سلام جلال
+        شركة الأمان للتجارة
       </h2>
     </template>
     <ModalAddCarContracts

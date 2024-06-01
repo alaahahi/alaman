@@ -360,10 +360,10 @@ class DashboardController extends Controller
         $dinar=$request->dinar ?? 0;
         $dolar_price=$request->dolar_price ?? 1;
         $expenses=$request->expenses ?? 0;
+        $expenses_dinar=$request->expenses_dinar ?? 0;
         $paid=$request->paid ?? 0;
         $commission=$request->commission ??0;
-        $tax=$request->tax ??0
-        ;
+        $tax=$request->tax ??0;
         if($dolar_price==0){
             $dolar_price=1;
         }elseif($dolar_price > 9999){
@@ -375,8 +375,10 @@ class DashboardController extends Controller
         $dolar_tax=(int)($tax/($dolar_price)) ??0;
         $dolar_commission=(int)($commission/($dolar_price)) ??0;
         $dolar_checkout=(int)($checkout/($dolar_price)) ??0;
+        $dolar_expenses_dinar=(int)($expenses_dinar/($dolar_price)) ??0;
 
-        $total = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax;
+        
+        $total = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax+$dolar_expenses_dinar;
         if($car->client_id == $request->client_id)
         {
 
@@ -452,6 +454,7 @@ class DashboardController extends Controller
         $tax_s=$request->tax_s ;
         
         $expenses_s=($request->expenses_s??0);
+        $expenses_dinar_s=($request->expenses_dinar_s??0);
         $dolar_price_s=$request->dolar_price_s ;
         if($dolar_price_s==0){
             $dolar_price_s=1;
@@ -464,8 +467,9 @@ class DashboardController extends Controller
         $dolar_tax=(int)($tax_s/($dolar_price_s)) ??0;
         $dolar_commission=(int)($commission_s/($dolar_price_s)) ??0;
         $dolar_checkout=(int)($checkout_s/($dolar_price_s)) ??0;
+        $expenses_dinar_s=(int)($expenses_dinar_s/($dolar_price_s)) ??0;
 
-        $total_s = $dolar_checkout+$shipping_dolar_s+ $coc_dolar_s+$dolar_commission+$dolar_tax +$dinar_custom+$expenses_s;
+        $total_s = $dolar_checkout+$shipping_dolar_s+ $coc_dolar_s+$dolar_commission+$dolar_tax +$dinar_custom+$expenses_s+$expenses_dinar_s;
 
         $profit=$total_s-$car->total;
 

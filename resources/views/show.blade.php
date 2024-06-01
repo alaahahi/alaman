@@ -92,6 +92,8 @@
             <th scope="col">ضريبة</th>
             
             <th scope="col">مصاريف</th>
+            <th scope="col">مصاريف دينار</th>
+
             <th scope="col">مجموع</th>
             <th scope="col">ملاحطة</th>
           </tr>
@@ -116,6 +118,8 @@
                 <td>{{$data->tax_s}}</td>
 
                 <td>{{$data->expenses_s}}</td>
+                <td>{{$data->expenses_dinar_s}}</td>
+                
                 <td>{{$data->total_s}}</td>
                 <td>{{$data->note}}</td>
               </tr>

@@ -256,14 +256,19 @@ function delTransactions(id){
 }
 
 function updateResults(input) {
-  // Ensure the input is a number
-  if (typeof input !== 'number') {
+  if(input){
+    if (typeof input !== 'number') {
     // Try converting the input to a number
     input = parseFloat(input) || 0;
   }
   
   // Use toLocaleString to format the number with commas
   return input.toLocaleString();
+  }else{
+    return 0;
+  }
+  // Ensure the input is a number
+
 }
 
 function conGenfirmExpenses(V) {
@@ -486,10 +491,10 @@ function conGenfirmExpenses(V) {
                               <InputLabel for="to" :value="`حساب ${boxes.name} بالدولار`" />
                               <TextInput
                                 id="to"
-                                type="number"
+                                type="text"
                                 disabled
                                 class="mt-1 block w-full"
-                                :value="laravelData.sumInTransactionsUser-laravelData.sumOutTransactionsUser"
+                                :value="updateResults(laravelData.sumInTransactionsUser-laravelData.sumOutTransactionsUser)"
                               />
                             </div>
               </div>
@@ -500,10 +505,10 @@ function conGenfirmExpenses(V) {
                               <InputLabel for="to" :value="`حساب ${boxes.name} بالدينار العراقي`" />
                               <TextInput
                                 id="to"
-                                type="number"
+                                type="text"
                                 disabled
                                 class="mt-1 block w-full"
-                                :value="laravelData.sumInTransactionsDinarUser-laravelData.sumOutTransactionsDinarUser"
+                                :value="updateResults(laravelData.sumInTransactionsDinarUser-laravelData.sumOutTransactionsDinarUser)"
                               />
                             </div>
               </div>

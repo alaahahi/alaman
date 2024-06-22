@@ -542,7 +542,7 @@ function conGenfirmExpenses(V) {
                   
                   <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran?.created }}</td>
                   <th className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.description }}</th>
-                  <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.amount+' '+tran.currency  }}</td>
+                  <td className="border dark:border-gray-800 text-center px-2 py-1">{{ updateResults(tran.amount)+' '+tran.currency  }}</td>
                   <td className="border dark:border-gray-800 text-center px-2 py-1">
                  
                   </td>

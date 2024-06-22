@@ -41,6 +41,7 @@ let GenExpenses = ref({});
 let isLoading=ref(false);
 let from = ref('');
 let to = ref('');
+let tranType = ref('');
 let mainAccount= ref(0)
 let onlineContracts= ref(0)
 let howler= ref(0)
@@ -100,13 +101,15 @@ const getResults = async ($state) => {
 };
  
 
-function openAddSales() {
+function openAddSales(t) {
+  tranType.value=t;
   showModalAddSales.value = true;
 }
 function opendebtSales() {
   showModaldebtSales.value = true;
 }
-function openAddExpenses(){
+function openAddExpenses(t){
+  tranType.value=t;
   showModalAddExpensesWallet.value = true;
 }
 function openConvertDollarDinar(){
@@ -152,7 +155,8 @@ const errors = ref(0);
  
 function confirm(V) {
   V.id=props.boxes.id;
-  axios.post('/api/receiptArrivedUser',V)
+  if(tranType.value =='outBox'){
+    axios.post('/api/receiptArrivedUserOutBox',V)
   .then(response => {
     showModalAddSales.value=false;
     window.location.reload();
@@ -162,8 +166,36 @@ function confirm(V) {
 
     errors.value = error.response.data.errors
   })
+
+   }else{
+    axios.post('/api/receiptArrivedUser',V)
+  .then(response => {
+    showModalAddSales.value=false;
+    window.location.reload();
+
+  })
+  .catch(error => {
+
+    errors.value = error.response.data.errors
+  })
+  }
+ 
 }
 function confirmdebt(V) {
+  if(tranType.value =='outBox'){
+    axios.post('/api/salesDebtUserOutBox',V)
+  .then(response => {
+    showModaldebtSales.value=false;
+    window.location.reload();
+
+  })
+  .catch(error => {
+
+    errors.value = error.response.data.errors
+  })
+
+   }else{
+
   axios.post('/api/salesDebtUser',V)
   .then(response => {
     showModaldebtSales.value=false;
@@ -175,6 +207,7 @@ function confirmdebt(V) {
 
     errors.value = error.response.data.errors
   })
+}
 }
 function confirmConvertDollarDinar(V) {
   axios.post('/api/convertDollarDinar',V)
@@ -329,12 +362,39 @@ function conGenfirmExpenses(V) {
           {{ $page.props.success }}
         </div>
       </div>
+
     </div>
     <div>
       <div class="max-w-9xl mx-auto sm:px-6 lg:px-8">
         <div class="overflow-hidden shadow-sm sm:rounded-lg">
           <div class=" border-b border-gray-200">
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 lg:gap-3">
+
+             <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-3 mb-4">
+              <div class="pt-5  print:hidden">
+              <button style=" width: 100%; margin-top: 4px;" v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2 || $page.props.auth.user.type_id==5" className="px-4 py-2 text-white bg-green-800 rounded-md focus:outline-none"
+                                            @click="openAddSales('outBox')">
+                                            وصل قبض
+                                            (أضافة)
+                                            -
+                                            بدون قاسه
+              </button>
+              </div>
+
+              <div class="pt-5  print:hidden">
+              <button  style=" width: 100%; margin-top: 4px;"  v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2|| $page.props.auth.user.type_id==5" className="px-4 py-2 text-white bg-red-800 rounded-md focus:outline-none"
+                                            @click="openAddExpenses('outBox')">
+                                             وصل صرف
+                                             (سحب)
+                                             -
+                                             بدون قاسه
+                                             
+
+              </button>
+       
+              </div>
+              </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3 lg:gap-3">
               <div class="pt-5  print:hidden">
               <button style=" width: 100%; margin-top: 4px;" v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2 || $page.props.auth.user.type_id==5" className="px-4 py-2 text-white bg-green-800 rounded-md focus:outline-none"
                                             @click="openAddSales()">
@@ -399,7 +459,8 @@ function conGenfirmExpenses(V) {
 
               
             </div>
-            <div class="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 lg:gap-3" v-if="false">
+            
+             <div class="grid grid-cols-4 md:grid-cols-4 lg:grid-cols-7 gap-3 lg:gap-3" v-if="false">
                         <div>
                           <button
                             type="button"
@@ -474,7 +535,7 @@ function conGenfirmExpenses(V) {
                   <!-- <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.morphed?.name }}</td> -->
 
                   
-                  <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran?.created_at.slice(0, 19).replace("T", "  ") }}</td>
+                  <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran?.created }}</td>
                   <th className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.description }}</th>
                   <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.amount+' '+tran.currency  }}</td>
                   <td className="border dark:border-gray-800 text-center px-2 py-1">

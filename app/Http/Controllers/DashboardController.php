@@ -252,6 +252,7 @@ class DashboardController extends Controller
     public function addCars(Request $request)
     {
         $owner_id=Auth::user()->owner_id;
+        $user_added=Auth::user()->id;
         $year_date=Carbon::now()->format('Y');
         $client_id =$request->client_id;
         $car_id=$request->id??0;
@@ -324,9 +325,28 @@ class DashboardController extends Controller
             'profit'=>($total_amount*-1)
              ]);
                 if($total_amount){
-                    $desc='اضافة سيارة من المشتريات رقم شانصى '.$request->vin;
+                    $desc='اضافة سيارة من المشتريات '.$request->car_type.'  شانصى '.$request->vin .'';
                     if($total_amount){
                         $this->accountingController->decreaseWallet(($total_amount),$desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$car->id,'App\Models\Car');
+
+                        $box_custom= User::with('wallet')->where('email','box_custom@account.com')->first();
+                        $box_plates= User::with('wallet')->where('email','box_plates@account.com')->first();
+                        $box_taxs= User::with('wallet')->where('email','box_taxs@account.com')->first();
+                        $box_clearance= User::with('wallet')->where('email','box_clearance@account.com')->first();
+ 
+
+
+                        $transactionDetilsd1 = ['type' => 'outUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$request->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+                        $transactionDetilsd2 = ['type' => 'outUser','wallet_id'=>$box_plates->wallet->id,'description'=>$desc,'amount'=>$request->commission,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+                        $transactionDetilsd3 = ['type' => 'outUser','wallet_id'=>$box_taxs->wallet->id,'description'=>$desc,'amount'=>$request->tax,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+                        $transactionDetilsd4 = ['type' => 'outUser','wallet_id'=>$box_clearance->wallet->id,'description'=>$desc,'amount'=>$request->checkout,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                        $transaction = Transactions::create($transactionDetilsd1);
+                        $transaction = Transactions::create($transactionDetilsd2);
+                        $transaction = Transactions::create($transactionDetilsd3);
+                        $transaction = Transactions::create($transactionDetilsd4);
+
+
                     }
                 }
 
@@ -336,6 +356,7 @@ class DashboardController extends Controller
     public function updateCarsP(Request $request)
     {
         $owner_id=Auth::user()->owner_id;
+        $user_added=Auth::user()->id;
 
         $car_id=$request->id??0;
         $maxNo = Car::max('no');
@@ -411,6 +432,62 @@ class DashboardController extends Controller
                 $this->accountingController->increaseWallet(($car->total-$total), $descClient,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$car->id,'App\Models\Car');
 
             }
+
+            $box_custom= User::with('wallet')->where('email','box_custom@account.com')->first();
+            $box_plates= User::with('wallet')->where('email','box_plates@account.com')->first();
+            $box_taxs= User::with('wallet')->where('email','box_taxs@account.com')->first();
+            $box_clearance= User::with('wallet')->where('email','box_clearance@account.com')->first();
+
+
+            if($car->dinar  != $request->dinar){
+                $desc='تعديل سعر  جمرك  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+                if($car->dinar >  $request->dinar){
+                    $transactionDetilsd1 = ['type' => 'inUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$car->dinar-$request->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }elseif($car->dinar < $request->dinar){
+                    $transactionDetilsd1 = ['type' => 'outUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$request->dinar-$car->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }
+                Transactions::create($transactionDetilsd1);
+            }
+
+            if($car->commission  != $request->commission){
+                $desc='تعديل سعر  لوحات  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+                if($car->commission >  $request->commission){
+                    $transactionDetilsd2 = ['type' => 'inUser','wallet_id'=>$box_plates->wallet->id,'description'=>$desc,'amount'=>$car->commission-$request->commission,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }elseif($car->commission < $request->commission){
+                    $transactionDetilsd2 = ['type' => 'outUser','wallet_id'=>$box_plates->wallet->id,'description'=>$desc,'amount'=>$request->commission-$car->commission,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }
+                Transactions::create($transactionDetilsd2);
+            }
+
+            if($car->tax  != $request->tax){
+                $desc='تعديل سعر  ضريبة  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+                if($car->tax >  $request->tax){
+                    $transactionDetilsd3 = ['type' => 'inUser','wallet_id'=>$box_taxs->wallet->id,'description'=>$desc,'amount'=>$car->tax-$request->tax,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }elseif($car->tax < $request->tax){
+                    $transactionDetilsd3 = ['type' => 'outUser','wallet_id'=>$box_taxs->wallet->id,'description'=>$desc,'amount'=>$request->tax-$car->tax,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }
+                Transactions::create($transactionDetilsd3);
+            }
+
+            if($car->checkout  != $request->checkout){
+                $desc='تعديل سعر  تخليص  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+                if($car->checkout >  $request->checkout){
+                    $transactionDetilsd4 = ['type' => 'inUser','wallet_id'=>$box_clearance->wallet->id,'description'=>$desc,'amount'=>$car->checkout-$request->checkout,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }elseif($car->checkout < $request->checkout){
+                    $transactionDetilsd4 = ['type' => 'outUser','wallet_id'=>$box_clearance->wallet->id,'description'=>$desc,'amount'=>$request->checkout-$car->checkout,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
+
+                }
+                Transactions::create($transactionDetilsd4);
+            }
+
+ 
             if($car->paid){
                 if($total > $car->paid +$car->discount){
                     $dataToUpdate['results'] = 1  ;

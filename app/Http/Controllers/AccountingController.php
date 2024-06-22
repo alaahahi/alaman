@@ -240,6 +240,28 @@ class AccountingController extends Controller
       return Response::json($request, 200);
   
       }
+      public function salesDebtUserOutBox(Request $request)
+      {
+       $owner_id=Auth::user()->owner_id;
+       $note= $request->note??'';
+       $amountDollar= $request->amountDollar??0;
+       $amountDinar= $request->amountDinar??0;
+       $user_id=$request->id;
+       $user=  User::with('wallet')->find($user_id);
+       $desc="وصل سحب مباشر"." ".'بدون قاسه' .' '.$user->name.' '.$note;
+       $date= $request->date??0;
+       if($amountDollar){
+         $transactionDetilsd = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
+         $transaction = Transactions::create($transactionDetilsd);
+       }
+       if($amountDinar)
+       {
+         $transactionDetilsq = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
+         $transaction = Transactions::create($transactionDetilsq);
+       }
+         return Response::json($request, 200);
+   
+       }
      public function salesDebt(Request $request)
      {
       $owner_id=Auth::user()->owner_id;
@@ -282,6 +304,33 @@ class AccountingController extends Controller
        return Response::json($transaction, 200);
    
        }
+       public function receiptArrivedUserOutBox(Request $request)
+       {
+        $owner_id=Auth::user()->owner_id;
+        $note= $request->amountNote??'';
+        $user_id=$request->id;
+
+        $amountDollar= $request->amountDollar??0;
+        $amountDinar= $request->amountDinar??0;
+        $user=  User::with('wallet')->find($user_id);
+
+        $desc="وصل قبض مباشر"." ".'بدون قاسه'.' '.$user->name.' '.$note;
+        $date= $request->date??0;
+            
+        if($amountDollar){
+             $transactionDetilsd = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
+            $transaction = Transactions::create($transactionDetilsd);
+        }
+        if($amountDinar){
+             $transactionDetilsq = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
+            $transaction = Transactions::create($transactionDetilsq);
+
+        }
+ 
+        return Response::json($transaction, 200);
+    
+        }
+
        public function receiptArrivedUser(Request $request)
        {
         $owner_id=Auth::user()->owner_id;

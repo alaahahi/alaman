@@ -545,7 +545,7 @@ function updateResults(input) {
                             <InputLabel for="pay" value="فلترة" />
                             <button
                             @click.prevent="refresh()"
-                            class="px-6 mb-12 py-2 mt-1 font-bold text-white bg-gray-500 rounded" style="width: 100%">
+                            class="px-6 mb-6 py-2 mt-1 font-bold text-white bg-gray-500 rounded" style="width: 100%">
                             <span v-if="!isLoading">فلترة</span>
                             <span v-else>جاري الحفظ...</span>
                           </button>
@@ -553,7 +553,7 @@ function updateResults(input) {
               <div class=" mr-5 print:hidden"  v-if="false">
                             <InputLabel for="pay" value="طباعة" />
                             <a
-                            class="px-6 mb-12 py-2 mt-1 font-bold text-white bg-orange-500 rounded" style="display: block;text-align: center;"
+                            class="px-6 mb-6 py-2 mt-1 font-bold text-white bg-orange-500 rounded" style="display: block;text-align: center;"
                             :href="`/getIndexAccounting?user_id=${laravelData?.user?.id}&from=${from}&to=${to}&print=5`"
                             target="_blank"
                             >
@@ -567,6 +567,37 @@ function updateResults(input) {
 
               
             </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 lg:gap-3">
+              <div class="pb-5  print:hidden">
+              <Link href="/wallet?id=989" style=" width: 100%; margin-top: 4px;display: block;text-align: center;" v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2 || $page.props.auth.user.type_id==5|| $page.props.auth.user.type_id==6" className="px-4 py-2 text-white bg-emerald-400 rounded-md focus:outline-none">
+                                            صندوق كمرك IQD
+              </Link>
+              </div>
+
+              <div class="pb-5  print:hidden">
+              <Link href="/wallet?id=990" style=" width: 100%; margin-top: 4px;display: block;text-align: center;"  v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2|| $page.props.auth.user.type_id==5" className="px-4 py-2 text-white bg-emerald-400 rounded-md focus:outline-none">
+                                            صندوق لوحات IQD
+              </Link>
+              </div>
+              
+              <div class="pb-5  print:hidden">
+              <Link href="/wallet?id=991"  style=" width: 100%; margin-top: 4px;display: block;text-align: center;"  v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2|| $page.props.auth.user.type_id==5|| $page.props.auth.user.type_id==6" className="px-4 py-2 text-white bg-emerald-400 rounded-md focus:outline-none">
+                                            صندوق ضريبة IQD
+              </Link>
+       
+              </div>
+
+              <div class="pb-5  print:hidden">
+              <Link  href="/wallet?id=992" style=" width: 100%; margin-top: 4px;display: block;text-align: center;"  v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2|| $page.props.auth.user.type_id==5|| $page.props.auth.user.type_id==6" className="px-4 py-2 text-white bg-emerald-400 rounded-md focus:outline-none">
+                                            صندوق تخليص IQD
+              </Link>
+       
+              </div>
+
+              </div>
+
+              
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3 lg:gap-3">
            
                         <div  v-if="$page.props.auth.user.type_id==1">
@@ -607,6 +638,9 @@ function updateResults(input) {
                           </button>
                         </div>
             </div>
+
+ 
+
             <div class="grid grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-3 lg:gap-3">
              
 

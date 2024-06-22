@@ -23,7 +23,7 @@ function check_vin(v){
   .then(response => {
     showErrorVin.value =  response.data;
     if(!showErrorVin.value){
-      VinApi(v)
+   //   VinApi(v)
     }
   })
   .catch(error => {

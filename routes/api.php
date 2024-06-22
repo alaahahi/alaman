@@ -154,7 +154,12 @@ Route::post('salesDebt',[AccountingController::class, 'salesDebt'])->name('sales
 Route::post('delTransactions',[AccountingController::class, 'delTransactions'])->name('delTransactions');
 Route::post('receiptArrived',[AccountingController::class, 'receiptArrived'])->name('receiptArrived');
 Route::post('receiptArrivedUser',[AccountingController::class, 'receiptArrivedUser'])->name('receiptArrivedUser');
+Route::post('receiptArrivedUserOutBox',[AccountingController::class, 'receiptArrivedUserOutBox'])->name('receiptArrivedUserOutBox');
+
+
+
 Route::post('salesDebtUser',[AccountingController::class, 'salesDebtUser'])->name('salesDebtUser');
+Route::post('salesDebtUserOutBox',[AccountingController::class, 'salesDebtUserOutBox'])->name('salesDebtUserOutBox');
 
 
 Route::post('GenExpenses',[AccountingController::class, 'GenExpenses'])->name('GenExpenses');

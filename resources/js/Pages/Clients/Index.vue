@@ -365,7 +365,7 @@ function confirmDelClient(V) {
                                         >
                                           <trash />
                                         </button>
-                                        <Link  v-if="false"
+                                        <Link  
                                           style="display:inline-flex;"
                                           className="px-1 py-1  text-white mx-1 bg-purple-900 rounded d-inline-block"
                                           :href="route('wallet',{ 'id':user.id})">

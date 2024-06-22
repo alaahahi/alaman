@@ -366,7 +366,7 @@ class DashboardController extends Controller
 
         // Loop through each car and add the price to the sum
         foreach ($cars as $car) {
-            $desc='اضافة تلقائية سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+            $desc='اضافة تلقائية لسيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
 
             if($car->dinar){
                 $transactionDetilsd1 = ['type' => 'outUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$car->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$car->date,'discount'=>0,'currency'=>'IQD'];

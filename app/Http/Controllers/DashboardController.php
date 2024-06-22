@@ -325,7 +325,6 @@ class DashboardController extends Controller
             'profit'=>($total_amount*-1)
              ]);
                 if($total_amount){
-                    $desc='اضافة سيارة من المشتريات '.$request->car_type.'  شانصى '.$request->vin .'';
                     if($total_amount){
                         $this->accountingController->decreaseWallet(($total_amount),$desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$car->id,'App\Models\Car');
 
@@ -334,6 +333,7 @@ class DashboardController extends Controller
                         $box_taxs= User::with('wallet')->where('email','box_taxs@account.com')->first();
                         $box_clearance= User::with('wallet')->where('email','box_clearance@account.com')->first();
  
+                    $desc='اضافة سيارة من المشتريات '.$request->car_type.'  شانصى '.$request->vin .'';
 
 
                         $transactionDetilsd1 = ['type' => 'outUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$request->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
@@ -352,6 +352,47 @@ class DashboardController extends Controller
 
 
         return Response::json('ok', 200);    
+    }
+    public function updateCarsAuto(Request $request)
+    {
+
+        $cars = Car::all();
+         $user_added=0;
+
+        $box_custom= User::with('wallet')->where('email','box_custom@account.com')->first();
+        $box_plates= User::with('wallet')->where('email','box_plates@account.com')->first();
+        $box_taxs= User::with('wallet')->where('email','box_taxs@account.com')->first();
+        $box_clearance= User::with('wallet')->where('email','box_clearance@account.com')->first();
+
+        // Loop through each car and add the price to the sum
+        foreach ($cars as $car) {
+            $desc='اضافة تلقائية سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+
+            if($car->dinar){
+                $transactionDetilsd1 = ['type' => 'outUser','wallet_id'=>$box_custom->wallet->id,'description'=>$desc,'amount'=>$car->dinar,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$car->date,'discount'=>0,'currency'=>'IQD'];
+                Transactions::create($transactionDetilsd1);
+
+            }
+            if($car->commission){
+                $transactionDetilsd2 = ['type' => 'outUser','wallet_id'=>$box_plates->wallet->id,'description'=>$desc,'amount'=>$car->commission,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$car->date,'discount'=>0,'currency'=>'IQD'];
+                Transactions::create($transactionDetilsd2);
+
+            }
+            if($car->tax){
+                $transactionDetilsd3 = ['type' => 'outUser','wallet_id'=>$box_taxs->wallet->id,'description'=>$desc,'amount'=>$car->tax,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$car->date,'discount'=>0,'currency'=>'IQD'];
+                Transactions::create($transactionDetilsd3);
+
+            }
+            if($car->checkout){
+            $transactionDetilsd4 = ['type' => 'outUser','wallet_id'=>$box_clearance->wallet->id,'description'=>$desc,'amount'=>$car->checkout,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$car->date,'discount'=>0,'currency'=>'IQD'];
+    
+            $transaction = Transactions::create($transactionDetilsd4);
+            }
+    
+        }
+
+        return response()->json(['message' => 'Transactions updated successfully.']);
+
     }
     public function updateCarsP(Request $request)
     {

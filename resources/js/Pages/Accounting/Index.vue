@@ -550,11 +550,11 @@ function updateResults(input) {
                             <span v-else>جاري الحفظ...</span>
                           </button>
               </div>
-              <div class=" mr-5 print:hidden"  v-if="false">
+              <div class=" mr-5 print:hidden" >
                             <InputLabel for="pay" value="طباعة" />
                             <a
-                            class="px-6 mb-6 py-2 mt-1 font-bold text-white bg-orange-500 rounded" style="display: block;text-align: center;"
-                            :href="`/getIndexAccounting?user_id=${laravelData?.user?.id}&from=${from}&to=${to}&print=5`"
+                            class="px-6 mb-12 py-2 mt-1 font-bold text-white bg-orange-500 rounded" style="display: block;text-align: center;"
+                            :href="`/getIndexAccounting?user_id=${laravelData?.user?.id}&from=${from}&to=${to}&print=6`"
                             target="_blank"
                             >
                             
@@ -686,6 +686,8 @@ function updateResults(input) {
                   <tr class="rounded-l-lg mb-2 sm:mb-0">
                     <th className="px-2 py-2" style="width: 100px;">رقم الوصل
                     </th>
+                    <th className="px-2 py-2" style="width: 100px;">حساب
+                    </th>
                     <!-- <th className="px-2 py-2">الحساب</th> -->
                     <th className="px-2 py-2" style="width: 180px;">التاريخ</th>
                     <th className="px-2 py-2">الوصف</th>
@@ -708,7 +710,7 @@ function updateResults(input) {
                   }"
                   class="bg-white border-b dark:bg-gray-900 dark:border-gray-900 hover:bg-gray-50 dark:hover:bg-gray-600">
                   <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.id }}</td>
-                  <!-- <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.morphed?.name }}</td> -->
+                  <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran.morphed?.name }}</td>
 
                   
                   <td className="border dark:border-gray-800 text-center px-2 py-1">{{ tran?.created_at.slice(0, 19).replace("T", "  ") }}</td>

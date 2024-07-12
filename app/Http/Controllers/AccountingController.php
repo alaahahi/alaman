@@ -39,6 +39,8 @@ use File;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\ImportInfo;
 use App\Exports\ExportInfo;
+use App\Exports\ExportAccount;
+
 
 class AccountingController extends Controller
 {
@@ -159,7 +161,10 @@ class AccountingController extends Controller
         ->whereIn('type', ['inUser', 'outUser'])
         ->where('wallet_id', $user->wallet->id)
         ->paginate(100);
-         }else{
+         }elseif($type=='printExcel'){
+            $allTransactions = $transactions->paginate(100);
+        }
+         else{
         $allTransactions = $transactions->paginate(100);
      }
      $sumAllTransactions = $allTransactions->where('currency','$')->sum('amount');
@@ -194,25 +199,31 @@ class AccountingController extends Controller
          $config=SystemConfig::first();
          return view('receiptPaymentTotal',compact('data','config'));
       }
-      if($print==2){
+      elseif($print==2){
          $config=SystemConfig::first();
          return view('receipt',compact('data','config','transactions_id','owner_id'));
       }
-      if($print==3){
+      elseif($print==3){
          $config=SystemConfig::first();
  
          return view('receiptPayment',compact('data','config','transactions_id'));
       }
-      if($print==4){
+      elseif($print==4){
          $config=SystemConfig::first();
  
          return view('receiptPaymentTotal',compact('data','config','transactions_id'));
       }
- 
-      if($print==5){
+      elseif($print==5){
         $config=SystemConfig::first();
 
         return view('receiptBoxTotal',compact('data','config','transactions_id'));
+     }
+     elseif($print==6){
+        $config=SystemConfig::first();
+      
+        return Excel::download(new ExportAccount($from,$to,$user->wallet->id), $from.' '.$to.'.xlsx');
+
+        return view('receiptPaymentTotal',compact('data','config','transactions_id'));
      }
      return response()->json($data); 
      }
@@ -227,41 +238,19 @@ class AccountingController extends Controller
       $desc="وصل سحب مباشر"." ".' قاسه'.' '.$user->name.' '.$note;
       $date= $request->date??0;
       if($amountDollar){
-        $transactiond=$this->debtWallet($amountDollar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'$',$date,0,'outUserBox');
+        $transactiond=$this->debtWallet($amountDollar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$user_id,'App\Models\User',0,0,'$',$date,0,'outUserBox');
         $transactionDetilsd = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$','parent_id'=>$transactiond->id];
         $transaction = Transactions::create($transactionDetilsd);
       }
       if($amountDinar)
       {
-        $transactionq=$this->debtWallet($amountDinar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'IQD',$date,0,'outUserBox');
+        $transactionq=$this->debtWallet($amountDinar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$user_id,'App\Models\User',0,0,'IQD',$date,0,'outUserBox');
         $transactionDetilsq = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD','parent_id'=>$transactionq->id];
         $transaction = Transactions::create($transactionDetilsq);
       }
       return Response::json($request, 200);
   
       }
-      public function salesDebtUserOutBox(Request $request)
-      {
-       $owner_id=Auth::user()->owner_id;
-       $note= $request->note??'';
-       $amountDollar= $request->amountDollar??0;
-       $amountDinar= $request->amountDinar??0;
-       $user_id=$request->id;
-       $user=  User::with('wallet')->find($user_id);
-       $desc="وصل سحب مباشر"." ".'بدون قاسه' .' '.$user->name.' '.$note;
-       $date= $request->date??0;
-       if($amountDollar){
-         $transactionDetilsd = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
-         $transaction = Transactions::create($transactionDetilsd);
-       }
-       if($amountDinar)
-       {
-         $transactionDetilsq = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
-         $transaction = Transactions::create($transactionDetilsq);
-       }
-         return Response::json($request, 200);
-   
-       }
      public function salesDebt(Request $request)
      {
       $owner_id=Auth::user()->owner_id;
@@ -304,33 +293,6 @@ class AccountingController extends Controller
        return Response::json($transaction, 200);
    
        }
-       public function receiptArrivedUserOutBox(Request $request)
-       {
-        $owner_id=Auth::user()->owner_id;
-        $note= $request->amountNote??'';
-        $user_id=$request->id;
-
-        $amountDollar= $request->amountDollar??0;
-        $amountDinar= $request->amountDinar??0;
-        $user=  User::with('wallet')->find($user_id);
-
-        $desc="وصل قبض مباشر"." ".'بدون قاسه'.' '.$user->name.' '.$note;
-        $date= $request->date??0;
-            
-        if($amountDollar){
-             $transactionDetilsd = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
-            $transaction = Transactions::create($transactionDetilsd);
-        }
-        if($amountDinar){
-             $transactionDetilsq = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
-            $transaction = Transactions::create($transactionDetilsq);
-
-        }
- 
-        return Response::json($transaction, 200);
-    
-        }
-
        public function receiptArrivedUser(Request $request)
        {
         $owner_id=Auth::user()->owner_id;
@@ -345,12 +307,12 @@ class AccountingController extends Controller
         $date= $request->date??0;
             
         if($amountDollar){
-            $transactiond=$this->increaseWallet($amountDollar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'$',$date,0,'inUserBox');
+            $transactiond=$this->increaseWallet($amountDollar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$user_id,'App\Models\User',0,0,'$',$date,0,'inUserBox');
             $transactionDetilsd = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$','parent_id'=>$transactiond->id];
             $transaction = Transactions::create($transactionDetilsd);
         }
         if($amountDinar){
-            $transactionq=$this->increaseWallet($amountDinar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'IQD',$date,0,'inUserBox');
+            $transactionq=$this->increaseWallet($amountDinar,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$user_id,'App\Models\User',0,0,'IQD',$date,0,'inUserBox');
             $transactionDetilsq = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD','parent_id'=>$transactionq->id];
             $transaction = Transactions::create($transactionDetilsq);
 
@@ -359,6 +321,55 @@ class AccountingController extends Controller
         return Response::json($transaction, 200);
     
         }
+        public function salesDebtUserOutBox(Request $request)
+        {
+         $owner_id=Auth::user()->owner_id;
+         $note= $request->note??'';
+         $amountDollar= $request->amountDollar??0;
+         $amountDinar= $request->amountDinar??0;
+         $user_id=$request->id;
+         $user=  User::with('wallet')->find($user_id);
+         $desc="وصل سحب مباشر"." ".'بدون قاسه' .' '.$user->name.' '.$note;
+         $date= $request->date??0;
+         if($amountDollar){
+           $transactionDetilsd = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
+           $transaction = Transactions::create($transactionDetilsd);
+         }
+         if($amountDinar)
+         {
+           $transactionDetilsq = ['type' => 'outUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
+           $transaction = Transactions::create($transactionDetilsq);
+         }
+           return Response::json($request, 200);
+     
+         }
+
+        public function receiptArrivedUserOutBox(Request $request)
+        {
+         $owner_id=Auth::user()->owner_id;
+         $note= $request->amountNote??'';
+         $user_id=$request->id;
+ 
+         $amountDollar= $request->amountDollar??0;
+         $amountDinar= $request->amountDinar??0;
+         $user=  User::with('wallet')->find($user_id);
+ 
+         $desc="وصل قبض مباشر"." ".'بدون قاسه'.' '.$user->name.' '.$note;
+         $date= $request->date??0;
+             
+         if($amountDollar){
+              $transactionDetilsd = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDollar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'$'];
+             $transaction = Transactions::create($transactionDetilsd);
+         }
+         if($amountDinar){
+              $transactionDetilsq = ['type' => 'inUser','wallet_id'=>$user->wallet->id,'description'=>$desc,'amount'=>$amountDinar,'is_pay'=>1,'morphed_id'=>$user_id,'morphed_type'=>'App\Models\User','user_added'=>0,'created'=>$date,'discount'=>0,'currency'=>'IQD'];
+             $transaction = Transactions::create($transactionDetilsq);
+ 
+         }
+  
+         return Response::json($transaction, 200);
+     
+         }
     public function getIndexAccountsSelas()
     { 
         $owner_id=Auth::user()->owner_id;
@@ -544,10 +555,10 @@ class AccountingController extends Controller
         ]];
  
         $wallet = Wallet::where('user_id',$car->client_id)->first();
-        $desc=trans('text.addPayment').' '.$amount.' '.$car->car_type.' رقم الشانص'.' '.$car->vin.' رقم كوبارت '.$car->car_number.' '.$note;
-        $tran=$this->increaseWallet($amount,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'$',0,0,'in',$details);
-        $this->increaseWallet($amount, $desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$car_id,'App\Models\User',1,$discount??0,'$',$this->currentDate,$tran->id,'in',$details);
-        $transaction=$this->decreaseWallet($amount+$discount, $desc,$car->client_id,$car_id,'App\Models\User',1,$discount??0,'$',$this->currentDate,$tran->id,'out',$details);
+        $desc=trans('text.addPayment').' '.$amount.' '.$car->car_type.' رقم الشانص'.' '.$car->vin.' رقم الكاتي'.$car->car_number.' '.$note;
+        $tran=$this->increaseWallet($amount,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$car->client_id,'App\Models\User',0,0,'$',0,0,'in',$details);
+        $this->increaseWallet($amount, $desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$car_id,'App\Models\Car',1,$discount??0,'$',$this->currentDate,$tran->id,'in',$details);
+        $transaction=$this->decreaseWallet($amount+$discount, $desc,$car->client_id,$car_id,'App\Models\Car',1,$discount??0,'$',$this->currentDate,$tran->id,'out',$details);
 
         $car->increment('paid',$amount);
         if($discount ?? 0){
@@ -619,9 +630,9 @@ class AccountingController extends Controller
         if($amount_o){
             $desc=trans('text.addPayment').' '.$amount_o.' '.$note;
 
-            $tran=$this->increaseWallet($amount_o,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$this->mainBox->where('owner_id',$owner_id)->first()->id,'App\Models\User',0,0,'$');
+            $tran=$this->increaseWallet($amount_o,$desc,$this->mainBox->where('owner_id',$owner_id)->first()->id,$client_id,'App\Models\User',0,0,'$');
     
-            $this->increaseWallet($amount_o, $desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$this->mainAccount->where('owner_id',$owner_id)->first()->id,'App\Models\User',1,$discount,'$',$this->currentDate,$tran->id);
+            $this->increaseWallet($amount_o, $desc,$this->mainAccount->where('owner_id',$owner_id)->first()->id,$client_id,'App\Models\User',1,$discount,'$',$this->currentDate,$tran->id);
     
             $transaction = $this->decreaseWallet((int)$amount_o+(int)$discount, $desc,$client_id,$client_id,'App\Models\User',1,$discount,'$',$this->currentDate,$tran->id);
             return Response::json($transaction, 200);    
@@ -631,6 +642,34 @@ class AccountingController extends Controller
 
        
     }
+
+    public function AddPayFromBalanceCar (Request $request){
+
+        $balance = $request->balance;
+        $car_id = $request->id;
+        $car = Car::find($car_id);
+        $shoudPaid = $car->total_s-$car->paid-$car->discount;
+ 
+        if ($balance >= $shoudPaid) {
+            // Deduct the amount and update 'paid' for this car
+             $car->update(['paid' => $car->total_s-$car->discount,'results' =>2]);
+        } else {
+            if($balance <= $shoudPaid){
+                $car->update(['paid' => $balance ,'results' =>1]);
+              }
+        } 
+        return Response::json($car, 200);    
+
+
+    }
+    public function DelPayFromBalanceCar (Request $request){
+        $car_id = $request->id;
+        $car = Car::find($car_id);
+        $car->update(['paid' => 0 ,'results' =>0]);
+        return Response::json($car, 200);    
+
+    }
+    
     public function getGenExpenses (Request $request){
         $year_date=Carbon::now()->format('Y');
 

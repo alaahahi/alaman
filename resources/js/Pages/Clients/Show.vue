@@ -48,6 +48,10 @@ let amount = ref(0);
 
 let client_Select = ref(0);
 let showReceiveBtn = ref(0);
+let showModalAddPayFromBalanceCar = ref(false);
+let showModalDelPayFromBalanceCar = ref(false);
+
+
 let getResults = async (page = 1) => {
   axios
     .get(`/api/getIndexAccountsSelas?page=${page}&user_id=${props.client_id}&from=${from.value}&to=${to.value}`)
@@ -397,7 +401,38 @@ function getDownloadUrl(name) {
       // Provide the base URL for downloading images
       return `/public/uploads/${name}`;
     }
+    function openModalAddPayFromBalanceCar(form = {}) {
+  formData.value = form;
+  showModalAddPayFromBalanceCar.value = true;
+}
+function openModalDelPayFromBalanceCar(form = {}) {
+  formData.value = form;
+  showModalDelPayFromBalanceCar.value = true;
+}
 
+function confirmAddPayFromBalanceCar(V) {
+  V.balance  =(((calculateTotalFilteredAmount().totalAmount)*-1)-(laravelData.value?.cars_paid))-(laravelData.value?.cars_discount)
+   axios
+    .post("/api/AddPayFromBalanceCar", V)
+    .then((response) => {
+      showModalAddPayFromBalanceCar.value = false;
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+function confirmDelPayFromBalanceCar(V) {
+  axios
+    .post("/api/DelPayFromBalanceCar", V)
+    .then((response) => {
+      showModalDelPayFromBalanceCar.value = false;
+      window.location.reload();
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 </script>
 
 <template>
@@ -410,6 +445,38 @@ function getDownloadUrl(name) {
         شركة الأمان للتجارة
       </h2>
     </template>
+
+    <ModalDelCar
+      :show="showModalAddPayFromBalanceCar ? true : false"
+      :formData="formData"
+      @a="confirmAddPayFromBalanceCar($event)"
+      @close="showModalAddPayFromBalanceCar = false"
+    >
+      <template #header>
+        <h2 class="mb-5 dark:text-gray-400 text-center">
+          هل متأكد من دفع 
+          {{ formData.car_type }}
+          السيارة ؟
+          من الرصيد
+        </h2>
+      </template>
+    </ModalDelCar>
+
+    <ModalDelCar
+      :show="showModalDelPayFromBalanceCar ? true : false"
+      :formData="formData"
+      @a="confirmDelPayFromBalanceCar($event)"
+      @close="showModalDelPayFromBalanceCar = false"
+    >
+      <template #header>
+        <h2 class="mb-5 dark:text-gray-400 text-center">
+          هل متأكد من اعادة دفعة السيارة
+          {{ formData.car_type }}
+          للرصيد ؟
+        </h2>
+      </template>
+    </ModalDelCar>
+    
     <ModalAddCarContracts
             :formData="formData"
             :show="showModalAddCarContracts ? true : false"
@@ -681,6 +748,16 @@ function getDownloadUrl(name) {
               </button>
             </div>
 
+            <div className="mb-4  mr-5"   v-if="((((calculateTotalFilteredAmount().totalAmount)*-1)-laravelData?.cars_discount)-(laravelData?.cars_paid)) != 0">
+              <InputLabel for="cars_need_paid" value="الرصيد غير موزع بالدولار" />
+              <TextInput
+                id="cars_need_paid"
+                type="number"
+                class="mt-1 block w-full"
+               
+                :value="((((calculateTotalFilteredAmount().totalAmount)*-1)-laravelData?.cars_discount)-(laravelData?.cars_paid))"
+              />
+            </div>
           </div>
           <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 lg:gap-1" v-if="showPaymentForm">
             <div className="mb-4  mr-5" v-if="false">
@@ -891,6 +968,13 @@ function getDownloadUrl(name) {
                       {{ $t('execute') }}
                     </th>
                     <th class="px-1 py-3 text-base">تخزين</th>
+                    <th
+                      scope="col"
+                      class="px-1 py-2 text-base print:hidden"
+                      style="width:120px"
+                    >
+                      الرصيد
+                    </th>
                 </tr>
                 </thead>
                 <tbody>
@@ -949,6 +1033,28 @@ function getDownloadUrl(name) {
                                       <img :src="getImageUrl(image.name)" alt="" class="px-1" style="max-width: 80px;max-height: 50px;display: inline;" />
                                     </a>
                     </td>
+                    <td
+                      className="border dark:border-gray-800 text-start px-2 py-1 print:hidden"
+                    >
+                      <button
+                        tabIndex="1"
+                        style="min-width: 100px;"
+                        class="px-1 py-1  text-white mx-1 bg-green-500 rounded"
+                        v-if="((((calculateTotalFilteredAmount().totalAmount)*-1)-laravelData?.cars_discount)-(laravelData?.cars_paid)) != 0"
+                        @click="openModalAddPayFromBalanceCar(car)"
+                      >
+                        دفع من الرصيد
+                      </button>
+                      <button
+                        tabIndex="1"
+                        style="min-width: 100px;"
+                        v-if="((((calculateTotalFilteredAmount().totalAmount)*-1)-laravelData?.cars_discount)-(laravelData?.cars_sum)) != 0 && car.paid"
+                        class="px-1 py-1 mt-1 text-white mx-1 bg-red-500 rounded"
+                        @click="openModalDelPayFromBalanceCar(car)"
+                      >
+                       اعادة للرصيد
+                      </button>
+                      </td>
                   </tr>
                 </tbody>
               </table>

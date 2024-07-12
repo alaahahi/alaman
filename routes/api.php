@@ -157,6 +157,8 @@ Route::post('receiptArrivedUser',[AccountingController::class, 'receiptArrivedUs
 Route::post('receiptArrivedUserOutBox',[AccountingController::class, 'receiptArrivedUserOutBox'])->name('receiptArrivedUserOutBox');
 
 
+Route::post('DelPayFromBalanceCar',[AccountingController::class, 'DelPayFromBalanceCar'])->name('DelPayFromBalanceCar');
+Route::post('AddPayFromBalanceCar',[AccountingController::class, 'AddPayFromBalanceCar'])->name('AddPayFromBalanceCar');
 
 Route::post('salesDebtUser',[AccountingController::class, 'salesDebtUser'])->name('salesDebtUser');
 Route::post('salesDebtUserOutBox',[AccountingController::class, 'salesDebtUserOutBox'])->name('salesDebtUserOutBox');

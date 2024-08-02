@@ -270,6 +270,8 @@ class DashboardController extends Controller
         $dinar=$request->dinar ?? 0;
         $dolar_price=$request->dolar_price ?? 1;
         $expenses=$request->expenses ?? 0;
+        $expenses_dinar=$request->expenses_dinar ?? 0;
+
         $paid=$request->paid ?? 0;
         $commission=$request->commission ??0;
         $tax=$request->tax ??0;
@@ -285,8 +287,9 @@ class DashboardController extends Controller
         $dolar_tax=(int)($tax/($dolar_price)) ??0;
         $dolar_commission=(int)($commission/($dolar_price)) ??0;
         $dolar_checkout=(int)($checkout/($dolar_price)) ??0;
+        $dolar_expenses_dinar=(int)($expenses_dinar/($dolar_price)) ??0;
 
-        $total_amount = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax;
+        $total_amount = $dolar_checkout+$shipping_dolar+$expenses+ $coc_dolar +$dinar_custom+$dolar_commission+$dolar_tax+$dolar_expenses_dinar;
         if( $client_id==0){
             $client = new User;
             $client->name = $request->client_name;
@@ -321,6 +324,7 @@ class DashboardController extends Controller
             'results'=> $results,
             'owner_id'=>$owner_id,
             'commission'=> $commission,
+            'expenses_dinar'=> $expenses_dinar,
             'tax'=>$tax,
             'profit'=>($total_amount*-1)
              ]);

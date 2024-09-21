@@ -882,6 +882,9 @@ const currentWork = ref(true);
                             {{ $t("car_owner") }}
                           </th>
                           <th scope="col" class="px-1 py-3 text-base">
+                            {{ $t("date") }}
+                          </th>
+                          <th scope="col" class="px-1 py-3 text-base">
                             {{ $t("car_type") }}
                           </th>
                           <th scope="col" class="px-1 py-3 text-base">
@@ -928,9 +931,7 @@ const currentWork = ref(true);
                           <th scope="col" class="px-1 py-3 text-base">
                             فائدة الشركة
                           </th>
-                          <th scope="col" class="px-1 py-3 text-base">
-                            {{ $t("date") }}
-                          </th>
+                   
                           <th scope="col" class="px-1 py-3 text-base">
                             {{ $t("note") }}
                           </th>
@@ -966,6 +967,11 @@ const currentWork = ref(true);
                             style="font-weight: bold; font-size: 16px"
                           >
                             {{ car.client?.name }}
+                          </td>
+                          <td
+                            className="border dark:border-gray-800 text-center px-1 py-2 "
+                          >
+                            {{ car.date }}
                           </td>
                           <td
                             className="border dark:border-gray-800 text-center px-1 py-2 "
@@ -1052,11 +1058,7 @@ const currentWork = ref(true);
                           >
                             {{ (car.total_s - car.total).toFixed(0) }}
                           </td>
-                          <td
-                            className="border dark:border-gray-800 text-center px-1 py-2 "
-                          >
-                            {{ car.date }}
-                          </td>
+              
                           <td
                             className="border dark:border-gray-800 text-center px-1 py-2 "
                           >

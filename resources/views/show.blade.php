@@ -76,8 +76,9 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">السيارة</th>
             <th scope="col">تاريخ</th>
+
+            <th scope="col">السيارة</th>
             <th scope="col">رقم شاسى</th>
             <th scope="col">رقم السيارة</th>
             <th scope="col">لون</th>
@@ -102,8 +103,9 @@
             @foreach ($clientData['data'] as $key=>$data)
             <tr>
                 <th scope="row">{{$key+1}}</th>
-                <td>{{$data->car_type}}</td>
                 <td>{{$data->date}}</td>
+
+                <td>{{$data->car_type}}</td>
                 <td>{{$data->vin}}</td>
                 <td>{{$data->car_number}}</td>
                 <td>{{$data->car_color}}</td>

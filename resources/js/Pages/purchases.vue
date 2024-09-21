@@ -877,7 +877,7 @@ const currentWork = ref(true);
                         class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center"
                       >
                         <tr>
-                          <th scope="col" class="px-1 py-3 text-base">No</th>
+                          <th scope="col" class="px-1 py-3 text-base">#</th>
                           <th scope="col" class="px-1 py-3 text-base">
                             {{ $t("car_owner") }}
                           </th>

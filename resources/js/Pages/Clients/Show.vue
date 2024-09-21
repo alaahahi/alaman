@@ -1009,9 +1009,9 @@ function confirmDelPayFromBalanceCar(V) {
                   class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 text-center"
                 >
                   <tr>
-                    <th scope="col" class="px-1 py-3 text-base">No</th>
+                    <th scope="col" class="px-1 py-3 text-base">#</th>
                     <th scope="col" class="px-1 py-3 text-base">
-                      {{ $t("car_owner") }}
+                      {{ $t("date") }}
                     </th>
                     <th scope="col" class="px-1 py-3 text-base">
                       {{ $t("car_type") }}
@@ -1048,9 +1048,7 @@ function confirmDelPayFromBalanceCar(V) {
                     <th scope="col" class="px-1 py-3 text-base">
                       فائدة الشركة
                     </th>
-                    <th scope="col" class="px-1 py-3 text-base">
-                      {{ $t("date") }}
-                    </th>
+          
                     <th scope="col" class="px-1 py-3 text-base">
                       {{ $t("note") }}
                     </th>
@@ -1097,10 +1095,9 @@ function confirmDelPayFromBalanceCar(V) {
                       {{ index + 1 }}
                     </td>
                     <td
-                      className="border dark:border-gray-800 text-center  dark:text-gray-200 text-black px-1 py-2 "
-                      style="font-weight: bold; font-size: 16px"
+                      className="border dark:border-gray-800 text-center px-1 py-2 "
                     >
-                      {{ car.client?.name }}
+                      {{ car.date }}
                     </td>
                     <td
                       className="border dark:border-gray-800 text-center px-1 py-2 "
@@ -1188,11 +1185,7 @@ function confirmDelPayFromBalanceCar(V) {
                     >
                       {{ (car.total_s - car.total).toFixed(0) }}
                     </td>
-                    <td
-                      className="border dark:border-gray-800 text-center px-1 py-2 "
-                    >
-                      {{ car.date }}
-                    </td>
+  
                     <td
                       className="border dark:border-gray-800 text-center px-1 py-2 "
                     >

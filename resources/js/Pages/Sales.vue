@@ -353,6 +353,9 @@ function getDownloadUrl(name) {
                           {{ $t("car_owner") }}
                         </th>
                         <th scope="col" class="px-1 py-3 text-base">
+                          {{ $t("date") }}
+                        </th>
+                        <th scope="col" class="px-1 py-3 text-base">
                           {{ $t("car_type") }}
                         </th>
                         <th scope="col" class="px-1 py-3 text-base">
@@ -393,9 +396,7 @@ function getDownloadUrl(name) {
                         <th scope="col" class="px-1 py-3 text-base">
                           فائدة الشركة
                         </th>
-                        <th scope="col" class="px-1 py-3 text-base">
-                          {{ $t("date") }}
-                        </th>
+                       
                         <th scope="col" class="px-1 py-3 text-base">
                           {{ $t("note") }}
                         </th>
@@ -432,6 +433,11 @@ function getDownloadUrl(name) {
                           style="font-weight: bold; font-size: 16px"
                         >
                           {{ car.client?.name }}
+                        </td>
+                        <td
+                          className="border dark:border-gray-800 text-center px-1 py-2 "
+                        >
+                          {{ car.date }}
                         </td>
                         <td
                           className="border dark:border-gray-800 text-center px-1 py-2 "
@@ -518,11 +524,7 @@ function getDownloadUrl(name) {
                         >
                           {{ (car.total_s - car.total).toFixed(0) }}
                         </td>
-                        <td
-                          className="border dark:border-gray-800 text-center px-1 py-2 "
-                        >
-                          {{ car.date }}
-                        </td>
+        
                         <td
                           className="border dark:border-gray-800 text-center px-1 py-2 "
                         >

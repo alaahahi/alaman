@@ -77,19 +77,19 @@
           <tr>
             <th scope="col">#</th>
             <th scope="col">تاريخ</th>
-
             <th scope="col">السيارة</th>
-            <th scope="col">رقم شاسى</th>
-            <th scope="col">رقم السيارة</th>
-            <th scope="col">لون</th>
             <th scope="col">موديل</th>
+            <th scope="col">لون</th>
+            <th scope="col">رقم السيارة</th>
+
+            <th scope="col">رقم شاسى</th>
 
             <th scope="col">نقل خارجي</th>
             <th scope="col"> نقل داخلي</th>
 
-            <th scope="col">تخليص</th>
-            <th scope="col">كمرك</th>
-            <th scope="col"> لوحات</th>
+            <th scope="col">التخليص</th>
+            <th scope="col">الكمرك</th>
+            <th scope="col"> اللوحات</th>
             <th scope="col">ضريبة</th>
             
             <th scope="col">مصاريف</th>
@@ -104,12 +104,12 @@
             <tr>
                 <th scope="row">{{$key+1}}</th>
                 <td>{{$data->date}}</td>
-
                 <td>{{$data->car_type}}</td>
-                <td>{{$data->vin}}</td>
-                <td>{{$data->car_number}}</td>
-                <td>{{$data->car_color}}</td>
                 <td>{{$data->year}}</td>
+                <td>{{$data->car_color}}</td>
+                <td>{{$data->car_number}}</td>
+
+                <td>{{$data->vin}}</td>
 
                 <td>{{$data->shipping_dolar_s}}</td>
                 <td>{{$data->coc_dolar_s}}</td>

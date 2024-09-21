@@ -497,7 +497,7 @@ class DashboardController extends Controller
             }
 
             if($car->commission  != $request->commission){
-                $desc='تعديل سعر  لوحات  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
+                $desc='تعديل سعر  اللوحات  سيارة من المشتريات '.$car->car_type.'  شانصى '.$car->vin .'';
                 if($car->commission >  $request->commission){
                     $transactionDetilsd2 = ['type' => 'inUser','wallet_id'=>$box_plates->wallet->id,'description'=>$desc,'amount'=>$car->commission-$request->commission,'is_pay'=>1,'morphed_id'=>$car->id,'morphed_type'=>'App\Models\Car','user_added'=>$user_added,'created'=>$request->date,'discount'=>0,'currency'=>'IQD'];
 

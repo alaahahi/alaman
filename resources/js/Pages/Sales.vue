@@ -365,11 +365,12 @@ function getDownloadUrl(name) {
                           {{ $t("color") }}
                         </th>
                         <th scope="col" class="px-1 py-3 text-base">
-                          {{ $t("vin") }}
-                        </th>
-                        <th scope="col" class="px-1 py-3 text-base">
                           {{ $t("car_number") }}
                         </th>
+                        <th scope="col" class="px-1 py-3 text-base">
+                          {{ $t("vin") }}
+                        </th>
+                
                         <th scope="col" class="px-1 py-3 text-base">
                           نقل خارجي
                         </th>
@@ -379,9 +380,9 @@ function getDownloadUrl(name) {
                         <th scope="col" class="px-1 py-3 text-base">
                           سعر الصرف
                         </th>
-                        <th scope="col" class="px-1 py-3 text-base">تخليص</th>
-                        <th scope="col" class="px-1 py-3 text-base">كمرك</th>
-                        <th scope="col" class="px-1 py-3 text-base">لوحات</th>
+                        <th scope="col" class="px-1 py-3 text-base">التخليص</th>
+                        <th scope="col" class="px-1 py-3 text-base">الكمرك</th>
+                        <th scope="col" class="px-1 py-3 text-base">اللوحات</th>
                         <th scope="col" class="px-1 py-3 text-base">ضريبة</th>
                         <th scope="col" class="px-1 py-3 text-base">مصاريف</th>
                         <th scope="col" class="px-1 py-3 text-base">
@@ -457,13 +458,14 @@ function getDownloadUrl(name) {
                         <td
                           className="border dark:border-gray-800 text-center px-1 py-2 "
                         >
-                          {{ car.vin }}
+                          {{ car.car_number }}
                         </td>
                         <td
                           className="border dark:border-gray-800 text-center px-1 py-2 "
                         >
-                          {{ car.car_number }}
+                          {{ car.vin }}
                         </td>
+              
                         <td
                           className="border dark:border-gray-800 text-center px-1 py-2 "
                         >

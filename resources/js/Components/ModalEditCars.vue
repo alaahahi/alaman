@@ -237,7 +237,7 @@ function validateExchangeRate(v) {
               </div>
               <div className="mb-4 mx-1">
                 <label class="dark:text-gray-200" for="checkout">
-                   لوحات
+                   اللوحات
                   <span>IQD</span>
                 </label>
                 <input

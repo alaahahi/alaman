@@ -577,7 +577,7 @@ function updateResults(input) {
 
               <div class="pb-5  print:hidden">
               <Link href="/wallet?id=990" style=" width: 100%; margin-top: 4px;display: block;text-align: center;"  v-if="$page.props.auth.user.type_id==1 || $page.props.auth.user.type_id==2|| $page.props.auth.user.type_id==5" className="px-4 py-2 text-white bg-emerald-400 rounded-md focus:outline-none">
-                                            صندوق لوحات IQD
+                                            صندوق اللوحات IQD
               </Link>
               </div>
               
